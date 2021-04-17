@@ -8,15 +8,16 @@ export const DivEntradaSaida = styled.div`
 export const DivForm = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 279px;
-input {
-    width: 312px;
+    align-items: center;
+    height: 210px;
+`
+
+export const InputPlaca = styled.input`
     height: 67px;
-    border-radius: 4px;
-    top: 32px;
+    width: 312px;
+    text-align: center;
     background-color: #FFFBE6;
-    outline-color: grey;
-}
+    font-size: 40px;
+    margin: 10px;
 `
