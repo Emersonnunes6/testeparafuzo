@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TextField from '@material-ui/core/TextField';
-import { DivForm } from './style';
+import { DivForm, InputPlaca } from './style';
 import Button from '@material-ui/core/Button';
 
 export default function CenteredTabs() {
@@ -25,6 +25,28 @@ export default function CenteredTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const rendMenu = () => {
+    if(value === 0){
+      return (
+      <DivForm>
+      <InputPlaca
+        placeholder="AAA-0000"
+      />
+      <Button 
+        style={{
+          width: '312px',
+          height: '67px',
+          backgroundColor: '#28DD91',
+          color: 'white'
+      }}
+      variant="contained" 
+      >Confirmar entrada
+      </Button>
+      </DivForm>
+      )
+    }
+  }
 
   return (
     <Paper
@@ -52,19 +74,7 @@ export default function CenteredTabs() {
         }}
         label="Saída" />
       </Tabs>
-      <DivForm>
-      
-        <Button 
-          style={{
-            width: '312px',
-            height: '67px',
-            backgroundColor: '#28DD91',
-            color: 'white'
-          }}
-          variant="contained" 
-        >Confirmar entrada
-        </Button>
-      </DivForm>
+        {rendMenu()}
     </Paper>
   );
 }
