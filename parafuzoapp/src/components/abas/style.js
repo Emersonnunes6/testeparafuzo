@@ -13,11 +13,19 @@ export const DivForm = styled.div`
     height: 210px;
 `
 
+export const DivSaida = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+`
+
 export const InputPlaca = styled.input`
     height: 67px;
     width: 312px;
     text-align: center;
     background-color: #FFFBE6;
     font-size: 40px;
-    margin: 10px;
+    margin: 5px;
 `
