@@ -4,11 +4,12 @@ import logo from '../../components/img/avatar_white.svg'
 import menu from '../../components/img/menu.svg'
 import CenteredTabs from "../../components/abas/abas"
 import GlobalStateContext from '../../globalState/globalStateContext'
+import useValorInput from '../../customHooks/useInput'
 
 const PaginaInicial = () => {
     const { requests } = useContext(GlobalStateContext)
-
-    requests.entradaEstacionamento()
+    const [inputEntrada, onChangeEntrada] = useValorInput()
+    const [inputSaida, onChangeSaida] = useValorInput()
 
     return (
         <div>
@@ -17,7 +18,15 @@ const PaginaInicial = () => {
                 <ImgMenu alt="menu" src={menu}/>
             </Header>
         <DivPrincipal>
-                <CenteredTabs/>
+                <CenteredTabs
+                    valueEntrada={inputEntrada}
+                    onChangeEntrada={onChangeEntrada}
+                    onClickEntrada={() => requests.entradaEstacionamento(inputEntrada)}
+                    valueSaida={inputSaida}
+                    onChangeSaida={onChangeSaida}
+                    onClickSaida={() => requests.saidaEstacionamento(inputSaida)}
+                    onClickPagamento={() => requests.pagamentoEstacionamento(inputSaida)}
+                />
         </DivPrincipal>
         </div>
     )

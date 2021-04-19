@@ -2,84 +2,55 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import TextField from '@material-ui/core/TextField';
-import { DivForm, InputPlaca, DivSaida } from './style';
-import Button from '@material-ui/core/Button';
+import SimpleBackdrop from '../backdrop/backdrop';
+import MenuEntrada from './menuEntrada';
+import MenuSaida from './menuSaida';
+import { corEntrada, corSaida, tamanhoPaper } from './funcoesStyle';
 
-export default function CenteredTabs() {
+export default function CenteredTabs(props) {
 
   const [value, setValue] = React.useState(0);
-
-  const tamanhoPaper = () => {
-      if(value === 0){
-        return '279px'
-    }else return '350px'
-  }
-
-  const corEntrada = () => {
-      if(value === 0){
-        return 'white'
-    }else return '#F2F2F2'
-  }
-  
-  const corSaida = () => {
-    if(value === 0){
-      return '#F2F2F2'
-  }else return 'white'
-  }
+  const [open, setOpen] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  //Funções que controlam o backdrop
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  const rendBackdrop = () => {
+    if(open === !false){
+      return <div>
+      <SimpleBackdrop
+        open={open}
+        onClickClose={handleClose}
+      />
+    </div>
+    }
+  }
+
   const rendMenu = () => {
     if(value === 0){
       return (
-      <DivForm>
-      <InputPlaca
-        placeholder="AAA-0000"
-      />
-      <Button 
-        style={{
-          width: '312px',
-          height: '67px',
-          margin: '5px',
-          backgroundColor: '#28DD91',
-          color: 'white'
-      }}
-      variant="contained" 
-      >Confirmar entrada
-      </Button>
-      </DivForm>
+        <MenuEntrada
+          inputEntrada={props.inputEntrada}
+          onChangeEntrada={props.onChangeEntrada}
+          onClickBackdrop={handleToggle}
+        />
       )
     }else return (
-      <DivSaida>
-        <InputPlaca
-          placeholder="AAA-0000"
+        <MenuSaida
+          inputSaida={props.inputSaida}
+          onChangeSaida={props.onChangeSaida}
+          onClickPagamento={props.onClickPagamento}
+          onClickSaida={props.onClickSaida}
         />
-        <Button 
-        style={{
-          width: '312px',
-          height: '67px',
-          margin: '5px',
-          backgroundColor: '#A769B2',
-          color: 'white'
-      }}
-      variant="contained" 
-      >Pagamento
-      </Button>
-      <Button 
-        style={{
-          width: '312px',
-          height: '67px',
-          margin: '5px',
-          backgroundColor: 'white',
-          color: '#A769B2'
-      }}
-      variant="outlined" 
-      >Saída
-      </Button>
-      </DivSaida>
     )
   }
 
@@ -88,7 +59,7 @@ export default function CenteredTabs() {
       style={{
         marginTop: '40px',
         width: '344px',
-        height: tamanhoPaper()
+        height: tamanhoPaper(value)
       }}
     >
       <Tabs
@@ -100,16 +71,17 @@ export default function CenteredTabs() {
       >
         <Tab style={{
           width: '172px',
-          backgroundColor: corEntrada()
+          backgroundColor: corEntrada(value)
         }}
         label="Entrada" />
         <Tab style={{
           width: '172px',
-          backgroundColor: corSaida()
+          backgroundColor: corSaida(value)
         }}
         label="Saída" />
       </Tabs>
         {rendMenu()}
+        {rendBackdrop()}
     </Paper>
   );
 }
