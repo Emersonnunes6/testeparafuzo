@@ -1,9 +1,10 @@
-import {InputPlaca, DivSaida} from './style'
+import {InputPlaca, DivSaida, DivLabel} from './style'
 import Button from '@material-ui/core/Button';
 
 const MenuSaida = (props) => {
     return (
         <DivSaida>
+            <DivLabel><label>Numero da placa:</label></DivLabel>
             <InputPlaca
             placeholder="AAA-0000"
             value={props.inputSaida}
@@ -27,11 +28,23 @@ const MenuSaida = (props) => {
                 height: '67px',
                 margin: '5px',
                 backgroundColor: 'white',
-                color: '#A769B2'
+                color: '#A769B2',
+                border: '2px solid #A769B2'
             }}
             variant="outlined" 
             onClick={props.onClickBackdrop} 
             >Saída
+            </Button>
+            <Button 
+                style={{
+                width: '312px',
+                height: '67px',
+                margin: '5px',
+                backgroundColor: 'white'
+            }} 
+            color= 'primary'
+            onClick={props.onClickBackdrop} 
+            >Ver histórico
             </Button>
       </DivSaida>
     )

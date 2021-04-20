@@ -12,12 +12,12 @@ const PaginaInicial = () => {
     const [inputSaida, onChangeSaida] = useValorInput()
 
     const registroEntrada = () => {
-        setters.setEntrada(1)
+        setters.setEntrada("loading")
         setTimeout(() => {
             requests.entradaEstacionamento(inputEntrada)
         }, 2000)
         setTimeout(() => {
-            setters.setEntrada(0)
+            setters.setEntrada("entrada")
         }, 4000)
     }
 

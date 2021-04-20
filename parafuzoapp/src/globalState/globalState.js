@@ -3,7 +3,7 @@ import GlobalStateContext from './globalStateContext'
 import axios from 'axios'
 
 const GlobalState = (props) => {
-    const [entrada, setEntrada] = useState(0)
+    const [entrada, setEntrada] = useState("entrada")
 
     const entradaEstacionamento = (placa) => { 
         let data = { 
@@ -19,8 +19,12 @@ const GlobalState = (props) => {
         axios.post("https://parking-lot-to-pfz.herokuapp.com/parking", data, axiosConfig)
         .then((res) => {
             console.log(res.data)
-            setEntrada(2)
+            setEntrada("check")
         }).catch((err) => {
+            setters.setEntrada("erro")
+            setTimeout(() => {
+                setters.setEntrada("entrada")
+            }, 3000)
             console.log(err.message)
         })
     }

@@ -1,7 +1,7 @@
 export const tamanhoPaper = (value) => {
     if(value === 0){
       return '279px'
-  }else return '350px'
+  }else return '400px'
 }
 
 export const corEntrada = (value) => {
