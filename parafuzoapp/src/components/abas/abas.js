@@ -41,15 +41,14 @@ export default function CenteredTabs(props) {
         <MenuEntrada
           inputEntrada={props.inputEntrada}
           onChangeEntrada={props.onChangeEntrada}
-          onClickBackdrop={handleToggle}
+          onClickEntrada={props.onClickEntrada}
         />
       )
     }else return (
         <MenuSaida
           inputSaida={props.inputSaida}
           onChangeSaida={props.onChangeSaida}
-          onClickPagamento={props.onClickPagamento}
-          onClickSaida={props.onClickSaida}
+          onClickBackdrop={handleToggle}
         />
     )
   }
