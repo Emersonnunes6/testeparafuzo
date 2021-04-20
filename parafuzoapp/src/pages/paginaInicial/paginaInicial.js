@@ -7,9 +7,19 @@ import GlobalStateContext from '../../globalState/globalStateContext'
 import useValorInput from '../../customHooks/useInput'
 
 const PaginaInicial = () => {
-    const { requests } = useContext(GlobalStateContext)
+    const { requests, setters } = useContext(GlobalStateContext)
     const [inputEntrada, onChangeEntrada] = useValorInput()
     const [inputSaida, onChangeSaida] = useValorInput()
+
+    const registroEntrada = () => {
+        setters.setEntrada(1)
+        setTimeout(() => {
+            requests.entradaEstacionamento(inputEntrada)
+        }, 2000)
+        setTimeout(() => {
+            setters.setEntrada(0)
+        }, 4000)
+    }
 
     return (
         <div>
@@ -21,11 +31,9 @@ const PaginaInicial = () => {
                 <CenteredTabs
                     valueEntrada={inputEntrada}
                     onChangeEntrada={onChangeEntrada}
-                    onClickEntrada={() => requests.entradaEstacionamento(inputEntrada)}
+                    onClickEntrada={registroEntrada}
                     valueSaida={inputSaida}
                     onChangeSaida={onChangeSaida}
-                    onClickSaida={() => requests.saidaEstacionamento(inputSaida)}
-                    onClickPagamento={() => requests.pagamentoEstacionamento(inputSaida)}
                 />
         </DivPrincipal>
         </div>

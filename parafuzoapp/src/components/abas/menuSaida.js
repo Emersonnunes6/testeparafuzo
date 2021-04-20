@@ -18,7 +18,7 @@ const MenuSaida = (props) => {
                 color: 'white'
             }}
             variant="contained" 
-            onClick={props.onClickPagamento}
+            onClick={props.onClickBackdrop} 
             >Pagamento
             </Button>
             <Button 
@@ -30,7 +30,7 @@ const MenuSaida = (props) => {
                 color: '#A769B2'
             }}
             variant="outlined" 
-            onClick={props.onClickSaida}
+            onClick={props.onClickBackdrop} 
             >Saída
             </Button>
       </DivSaida>

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GlobalStateContext from './globalStateContext'
 import axios from 'axios'
 
 const GlobalState = (props) => {
+    const [entrada, setEntrada] = useState(0)
 
     const entradaEstacionamento = (placa) => { 
         let data = { 
@@ -18,7 +19,7 @@ const GlobalState = (props) => {
         axios.post("https://parking-lot-to-pfz.herokuapp.com/parking", data, axiosConfig)
         .then((res) => {
             console.log(res.data)
-            alert("Entrada cadastrada!!!")
+            setEntrada(2)
         }).catch((err) => {
             console.log(err.message)
         })
@@ -60,8 +61,10 @@ const GlobalState = (props) => {
 
 
     const requests = {entradaEstacionamento, pagamentoEstacionamento, saidaEstacionamento}
+    const states = {entrada}
+    const setters = {setEntrada}
 
-    const dados = {requests}
+    const dados = {requests, states, setters}
 
     return(
         <GlobalStateContext.Provider value={dados}>
