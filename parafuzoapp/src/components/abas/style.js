@@ -10,7 +10,7 @@ export const DivForm = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 210px;
+    margin-top: 25px;
 `
 
 export const DivLabel = styled.div`
@@ -29,7 +29,7 @@ export const DivSaida = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 350px;
+    margin-top: 10px;
 `
 
 export const InputPlaca = styled.input`
@@ -44,4 +44,27 @@ export const InputPlaca = styled.input`
 :focus {
     border: 2px solid grey;
 } 
+`
+
+export const DivCondicional = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 4px;
+    height: 294px;
+    width: 339px;
+    p{
+        color: black;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    h1{
+        color: #4DD0E1;
+        padding: 0;
+        margin: 0;
+        margin-top: 5px;
+    }
 `

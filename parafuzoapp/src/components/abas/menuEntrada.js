@@ -16,6 +16,7 @@ const MenuEntrada = (props) => {
             <DivForm>
                 <DivLabel><label>Numero da placa:</label></DivLabel>
                 <InputPlaca
+                    required
                     placeholder="AAA-0000"
                     value={props.inputEntrada}
                     onChange={props.onChangeEntrada}
@@ -48,6 +49,7 @@ const MenuEntrada = (props) => {
             return (
                 <DivForm>
                 <InputPlaca
+                    required
                     placeholder="AAA-0000"
                     value={props.inputEntrada}
                     onChange={props.onChangeEntrada}
