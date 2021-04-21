@@ -16,7 +16,7 @@ export default function SimpleAlerts() {
 
   return (
     <div className={classes.root}>
-      <Alert severity="error">This is an error alert — check it out!</Alert>
+      <Alert severity="error">Erro! Tente novamente</Alert>
     </div>
   );
 }

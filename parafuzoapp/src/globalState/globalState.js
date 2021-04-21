@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const GlobalState = (props) => {
     const [entrada, setEntrada] = useState("entrada")
+    const [saida, setSaida] = useState()
 
     const entradaEstacionamento = (placa) => { 
         let data = { 
@@ -65,8 +66,8 @@ const GlobalState = (props) => {
 
 
     const requests = {entradaEstacionamento, pagamentoEstacionamento, saidaEstacionamento}
-    const states = {entrada}
-    const setters = {setEntrada}
+    const states = {entrada, saida}
+    const setters = {setEntrada, setSaida}
 
     const dados = {requests, states, setters}
 

@@ -48,7 +48,7 @@ export default function CenteredTabs(props) {
         <MenuSaida
           inputSaida={props.inputSaida}
           onChangeSaida={props.onChangeSaida}
-          onClickBackdrop={handleToggle}
+          handleToggle={handleToggle}
         />
     )
   }

@@ -21,6 +21,8 @@ const PaginaInicial = () => {
         }, 4000)
     }
 
+    
+
     return (
         <div>
             <Header>
