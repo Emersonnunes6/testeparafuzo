@@ -2,28 +2,41 @@ import React, {useContext} from 'react';
 import {InputPlaca, DivSaida, DivLabel} from './style'
 import Button from '@material-ui/core/Button';
 import GlobalStateContext from '../../globalState/globalStateContext';
+import { irParaHistorico } from '../../routes/cordinator';
+import { useHistory } from 'react-router';
 
 const MenuSaida = (props) => {
-    const {setters} = useContext(GlobalStateContext)
+    const history = useHistory()
 
+    //Objeto do globalState que guarda os inputs e os sets
+    const {inputs, onChanges, setters} = useContext(GlobalStateContext)
+
+    //Função que muda o state para pagamento e renderiza a tela correta no backdrop
     const onClickPagamento = () => {
         props.handleToggle()
-        setters.setSaida("pagamento")
+        setters.setBackdrop("pagamento")
       }
     
+    //Função que muda o state para saida e renderiza a tela correta no backdrop
       const onClickSaida = () => {
         props.handleToggle()
-        setters.setSaida("saida")
+        setters.setBackdrop("saida")
+      }
+    
+    //Função que usa o coordinator para encaminhar o usuario para o historico da placa
+      const onClickHistorico = () => {
+          irParaHistorico(history, inputs.inputSaida)
       }
 
+    //Pagina de saida completa
     return (
         <DivSaida>
             <DivLabel><label>Numero da placa:</label></DivLabel>
             <InputPlaca
                 required
                 placeholder="AAA-0000"
-                value={props.inputSaida}
-                onChange={props.onChangeSaida}
+                value={inputs.inputSaida}
+                onChange={onChanges.onChangeSaida}
             />
             <Button 
                 style={{
@@ -58,7 +71,7 @@ const MenuSaida = (props) => {
                 backgroundColor: 'white'
             }} 
             color= 'primary'
-            onClick={props.onClickBackdrop} 
+            onClick={onClickHistorico} 
             >Ver histórico
             </Button>
       </DivSaida>

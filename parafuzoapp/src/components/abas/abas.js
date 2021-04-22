@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -6,48 +6,47 @@ import SimpleBackdrop from '../backdrop/backdrop';
 import MenuEntrada from './menuEntrada';
 import MenuSaida from './menuSaida';
 import { corEntrada, corSaida, tamanhoPaper } from './funcoesStyle';
+import GlobalStateContext from '../../globalState/globalStateContext';
 
 export default function CenteredTabs(props) {
 
-  const [value, setValue] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+  //Objetos do globalState
+  const {states, setters} = useContext(GlobalStateContext)
 
+  //Estado que controla os botoes Entrada/Saida
+  const [value, setValue] = React.useState(0);
+  
+  
+  //Funções que controlam o backdrop
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  //Funções que controlam o backdrop
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleToggle = () => {
-    setOpen(!open);
+    setters.setOpen(!states.open);
   };
 
+  //Função que renderiza o backdrop
   const rendBackdrop = () => {
-    if(open === !false){
+    if(states.open === !false){
       return <div>
       <SimpleBackdrop
-        open={open}
-        onClickClose={handleClose}
+        open={states.open}
       />
     </div>
     }
   }
 
+  //Função que renderiza entrada ou saida de acordo com o botao selecionado
   const rendMenu = () => {
     if(value === 0){
       return (
         <MenuEntrada
-          inputEntrada={props.inputEntrada}
-          onChangeEntrada={props.onChangeEntrada}
           onClickEntrada={props.onClickEntrada}
         />
       )
     }else return (
         <MenuSaida
-          inputSaida={props.inputSaida}
-          onChangeSaida={props.onChangeSaida}
           handleToggle={handleToggle}
         />
     )

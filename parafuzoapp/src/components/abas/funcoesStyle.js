@@ -14,5 +14,5 @@ export const corSaida = (value) => {
     if(value === 0){
       return '#F2F2F2'
   }else return 'white'
-  }
+}
 

@@ -7,10 +7,12 @@ import GlobalStateContext from '../../globalState/globalStateContext'
 import SimpleAlerts from './alerta';
 
 const MenuEntrada = (props) => {
-    const {states} = useContext(GlobalStateContext)
+    const {states, inputs, onChanges} = useContext(GlobalStateContext)
 
+    //Função que renderiza a etapa em que o cadastro da placa se encontra
     const rendEntrada = () => {
         switch(states.entrada){
+        //Etapa de cadastro
         case "entrada":
         return (
             <DivForm>
@@ -18,8 +20,8 @@ const MenuEntrada = (props) => {
                 <InputPlaca
                     required
                     placeholder="AAA-0000"
-                    value={props.inputEntrada}
-                    onChange={props.onChangeEntrada}
+                    value={inputs.inputEntrada}
+                    onChange={onChanges.onChangeEntrada}
                 />
                 <Button 
                     style={{
@@ -35,16 +37,19 @@ const MenuEntrada = (props) => {
                 </Button>
             </DivForm>
         )
+        //Etapa de carregamento
         case "loading":
             return <DivForm>
                 <img src={loading} alt="loading"></img>
                 <p>Registrando...</p>
             </DivForm> 
+        //Se o cadastro for bem sucedido essa tela é renderizada
         case "check": 
             return <DivForm>
                 <img src={check} alt="check"></img>
                 <p>Registrado!!!</p>
             </DivForm>
+        //Caso nao, a tela retorna pra tela de cadastro com uma mensagem de erro
         case "erro": 
             return (
                 <DivForm>

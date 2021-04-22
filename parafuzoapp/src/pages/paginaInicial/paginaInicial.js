@@ -4,39 +4,35 @@ import logo from '../../components/img/avatar_white.svg'
 import menu from '../../components/img/menu.svg'
 import CenteredTabs from "../../components/abas/abas"
 import GlobalStateContext from '../../globalState/globalStateContext'
-import useValorInput from '../../customHooks/useInput'
 
 const PaginaInicial = () => {
-    const { requests, setters } = useContext(GlobalStateContext)
-    const [inputEntrada, onChangeEntrada] = useValorInput()
-    const [inputSaida, onChangeSaida] = useValorInput()
 
+    const { requests, setters, inputs } = useContext(GlobalStateContext)
+
+    //Função que chama a requisição de entrada e vai mudando a renderizacao de acordo com o 
+    //momento da requisição
     const registroEntrada = () => {
         setters.setEntrada("loading")
         setTimeout(() => {
-            requests.entradaEstacionamento(inputEntrada)
+            requests.entradaEstacionamento(inputs.inputEntrada)
         }, 2000)
         setTimeout(() => {
             setters.setEntrada("entrada")
         }, 4000)
-    }
-
-    
-
+    }   
+  
     return (
         <div>
             <Header>
                 <ImgLogo alt="Logo" src={logo}/>
                 <ImgMenu alt="menu" src={menu}/>
             </Header>
+            <CenteredTabs
+                onClickEntrada={registroEntrada}
+            />
         <DivPrincipal>
-                <CenteredTabs
-                    valueEntrada={inputEntrada}
-                    onChangeEntrada={onChangeEntrada}
-                    onClickEntrada={registroEntrada}
-                    valueSaida={inputSaida}
-                    onChangeSaida={onChangeSaida}
-                />
+            
+                
         </DivPrincipal>
         </div>
     )
