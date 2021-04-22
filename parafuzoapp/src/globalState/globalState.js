@@ -1,12 +1,30 @@
 import React, { useState } from 'react'
 import GlobalStateContext from './globalStateContext'
 import axios from 'axios'
+import useValorInput from '../customHooks/useInput'
 
 const GlobalState = (props) => {
-    const [entrada, setEntrada] = useState("entrada")
-    const [saida, setSaida] = useState()
 
+    //Estado que controla o backdrop
+    const [open, setOpen] = useState(false);
+    
+    //Estados que controlam a tela que será renderizada dentro do backdrop
+    const [entrada, setEntrada] = useState("entrada")
+    const [backdrop, setBackdrop] = useState()
+    const [backdropSaida, setBackdropSaida] = useState("liberar")
+    const [backdropPagamento, setBackdropPagamento] = useState("pagar")
+    const [menu, setMenu] = useState("inicio")
+
+    //Inputs de entrada e saida
+    const [inputEntrada, onChangeEntrada] = useValorInput()
+    const [inputSaida, onChangeSaida] = useValorInput()
+
+    //Array que é setada com o historico que vem da requisição 
+    const [historicoPlaca, setHistoricoPlaca] = useState([])
+
+    //Requisição de entrada 
     const entradaEstacionamento = (placa) => { 
+
         let data = { 
             plate: placa 
         }
@@ -19,34 +37,16 @@ const GlobalState = (props) => {
 
         axios.post("https://parking-lot-to-pfz.herokuapp.com/parking", data, axiosConfig)
         .then((res) => {
-            console.log(res.data)
             setEntrada("check")
         }).catch((err) => {
             setters.setEntrada("erro")
             setTimeout(() => {
                 setters.setEntrada("entrada")
             }, 3000)
-            console.log(err.message)
         })
     }
 
-    const saidaEstacionamento = (placa) => {
-
-        let axiosConfig = {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-
-        axios.post(`https://parking-lot-to-pfz.herokuapp.com/parking/${placa}/out`, axiosConfig)
-        .then((res) => {
-            console.log(res.data)
-            alert("Saída liberada!!!")
-        }).catch((err) => {
-            console.log(err.message)
-        })
-    }
-
+    //Requisição de pagamento
     const pagamentoEstacionamento = (placa) => {
 
         let axiosConfig = {
@@ -57,19 +57,68 @@ const GlobalState = (props) => {
 
         axios.post(`https://parking-lot-to-pfz.herokuapp.com/parking/${placa}/pay`, axiosConfig)
         .then((res) => {
-            console.log(res.data)
-            alert("Pagamento efetuado!!!")
+            setBackdropPagamento("check")
+            setTimeout(() => {
+                setters.setOpen(false)  
+              }, 2000) 
         }).catch((err) => {
-            console.log(err.message)
+            setBackdropPagamento("erro")
+            setTimeout(() => {
+              setters.setOpen(false)  
+            }, 2000) 
+        })
+    }
+    
+    //Requisição de saida
+    const saidaEstacionamento = (placa) => {
+
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        axios.post(`https://parking-lot-to-pfz.herokuapp.com/parking/${placa}/out`, axiosConfig)
+        .then((res) => {
+            setBackdropSaida("check")
+            setTimeout(() => {
+                setters.setOpen(false)  
+              }, 2000)
+        }).catch((err) => {
+            setBackdropSaida("erro")
+            setTimeout(() => {
+                setters.setOpen(false)  
+              }, 2000) 
         })
     }
 
+    //Requisição que retorna o historico da placa 
+    const listarHistorico = (placa) => {
 
-    const requests = {entradaEstacionamento, pagamentoEstacionamento, saidaEstacionamento}
-    const states = {entrada, saida}
-    const setters = {setEntrada, setSaida}
+        let axiosConfig = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
 
-    const dados = {requests, states, setters}
+        axios.get(`https://parking-lot-to-pfz.herokuapp.com/parking/${placa}`, axiosConfig)
+        .then((res) => {
+            setHistoricoPlaca(res.data)
+        }).catch((err) => {
+            
+        })
+
+    }
+
+    //Objetos separados por categoria
+    const requests = {entradaEstacionamento, pagamentoEstacionamento, saidaEstacionamento, listarHistorico}
+    const states = {entrada, backdrop, backdropSaida, backdropPagamento, open, historicoPlaca, menu}
+    const setters = {setEntrada, setBackdrop, setBackdropSaida, setBackdropPagamento, setOpen, setMenu}
+    const inputs = { inputSaida, inputEntrada}
+    const onChanges = { onChangeSaida, onChangeEntrada }
+
+    //objeto que retorna todos os outros para o globalState
+    const dados = {requests, states, setters, inputs, onChanges}
 
     return(
         <GlobalStateContext.Provider value={dados}>
